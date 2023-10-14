@@ -1,3 +1,20 @@
+# Tic Tac Toe 
+
+Tic-Tac-Toe, also known as Noughts and Crosses, is played on a 3x3 grid where two players, traditionally represented by "X" and "O," take turns marking empty cells. 
+The objective is to form a line of three of their symbols in a row, horizontally, vertically, or diagonally, before their opponent does.
+The first player, often "X," strives to occupy the center square initially, as it provides the greatest opportunity to win.
+The player can also play for a draw if their opponent does not make a critical mistake. 
+The player going second, typically "O," aims to create a defensive strategy to counter the first player's attempts and, if possible, seize a victory opportunity. 
+The game's depth emerges from recognizing these strategies and anticipating the opponent's moves.
+
+# UI of the game
+![Screenshot (102)](https://github.com/mohit5723/Tic-Tac-Toe/assets/113592385/23196e3c-45f0-40dd-8b1e-12a98f9b305a)
+
+# Declaring winner
+
+![Screenshot (103)](https://github.com/mohit5723/Tic-Tac-Toe/assets/113592385/55e9731f-c1cf-4938-820b-60551dab3019)
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
