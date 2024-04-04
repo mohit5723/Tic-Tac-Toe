@@ -5,6 +5,7 @@
 
 body{
     background-color: burlywood;
+    background-image : url("bg.webp");
 }
 
 
@@ -33,3 +34,37 @@ body{
     width: inherit;
     height: inherit;
   }
+
+  .title{
+    font-size: 443%;
+    background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);    -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  justify-content: center;
+  /* background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%); */
+
+  }
+
+  .navbar{
+    background-image: linear-gradient(to right, #434343 0%, black 100%);
+   }
+
+   .status{
+    font-size: 150%;
+    margin-bottom: 20px;
+    background: -webkit-linear-gradient(#ebc7c7, #695a5a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;   
+  }
+
+  .game-info{
+    position: absolute;
+    top: 40%;
+    left: 33%;
+  }
+
+  .game-btn,.restart-btn{
+    background-image: linear-gradient(to top, #accbee 0%, #e7f0fd 100%);
+  }
+
+  
