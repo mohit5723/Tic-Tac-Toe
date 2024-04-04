@@ -1,135 +1,99 @@
-import React, { useState } from "react";
+import React,{useState} from "react";
 import Sqaure from "./Square";
 
-function App() {
-  const [history, setHistory] = useState([Array(9).fill(null)]);
-  const [stepNumber, setStepNumber] = useState(0);
-  const [xIsNext, setXIsNext] = useState(true);
-  const [isButtonDisabled, setButtonDisabled] = useState(Array(9).fill(false));
+function App(){
 
-  const current = history[stepNumber];
+    const [count,setCount]= useState(Array(9).fill(null)); 
+    // TURN OF X=TRUE;
+    const [xIsNext, setXIsNext] = useState(true);
+    
+  // draw condition
+    
 
-  // Function to restart the game
-const restart = () => {
-  setHistory([Array(9).fill(null)]);
-  setStepNumber(0);
-  setXIsNext(true);
-  setButtonDisabled(Array(9).fill(false));
-};
+    // disable button after clicking on it
+    const [isButtonDisabled, setButtonDisabled] = useState(false);
 
-  // Winner selection function
-function calculateWinner(squares) {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6]
-  ];
+    const handleClick= (index)=>{
+      if (count[index] || isButtonDisabled[index] || calculateWinner(count)) {
+        return; // Return if the button is disabled or already clicked.
+      }
 
-  for (const line of lines) {
-    const [a, b, c] = line;
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+      // update the values in box
+       console.log("index ",index);
+       const updatedCount = [...count];
+       updatedCount[index] = xIsNext?"X":"O";
+       setCount(updatedCount);
+       
+    //    UPDATE X = FALSE
+       setXIsNext(!xIsNext);
+       
+      //  disabling the button
+       setButtonDisabled(true);
+    };
+
+    // restart/refresh the page
+    function restart(){
+      console.log("click");
+      // refresh the page 
+      window.location.reload();
     }
-  }
-
-  if (squares.every((square) => square !== null)) {
-    return 'Draw';
-  }
-
-  return null;
-}
-
-
-  // Function to handle a click on a square
-  const handleClick = (index) => {
-    if (calculateWinner(current) || current[index] || isButtonDisabled[index]) {
-      return;
+    
+    // winner selection
+    function calculateWinner(squares) {
+      const lines = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+      ];
+      for (const element of lines) {
+        const [a, b, c] = element;
+        if (squares[a]!=null && squares[a] === squares[b] && squares[a] === squares[c]) {
+          return squares[a];
+        }
+      }
+      return null;
     }
 
-    const newHistory = history.slice(0, stepNumber + 1);
-    const newSquares = [...current];
-    newSquares[index] = xIsNext ? "X" : "O";
+    // DECLARING WINNER
+    const winner = calculateWinner(count);
+      let status;
+      if (winner) {
+        status = 'Winner: ' + winner + ', Restart the Game';
+      } else {
+        status = 'Player ' + (xIsNext ? 'X Turn :' : 'O Turn :');
+      }
 
-    setHistory([...newHistory, newSquares]);
-    setStepNumber(newHistory.length);
-    setXIsNext(!xIsNext);
+    
 
-    const newButtonDisabled = [...isButtonDisabled];
-    newButtonDisabled[index] = true;
-    setButtonDisabled(newButtonDisabled);
-  };
+    return (
+        <div className="container text-center table">
 
-  // Function to jump to a specific step in the game
-  const jumpTo = (step) => {
-    setStepNumber(step);
-    setXIsNext(step % 2 === 0);
-  };
-
-  // Winner selection function remains the same
-
-  const result = calculateWinner(current);
-  let status;
-
-  if (result === "Draw") {
-    status = "It's a draw! Restart the game.";
-  } else if (result) {
-    status = "Winner: " + result + ", Restart the Game";
-  } else {
-    status = "Player " + (xIsNext ? "X Turn" : "O Turn");
-  }
-
-  return (
-    <>
-      <div className="navbar">
-        <div className="title">
-          <p>Tic Tac Toe</p> 
-        </div>
-      </div>
-
-      <div className="container text-center table">
-        <h1>
-          <button className="restart-btn"
-            onClick={() => restart()}
-            style={{
-              backgroundColor: "silver",
-              width: "200px",
-              height: "50px",
-              marginBottom: "20px",
-              color: "black",
-            }}
-          >
+        {/* restart button */}
+          <h1>
+          <button 
+          onClick={()=>restart()}
+          style={{backgroundColor:"silver",width:"200px",height:"50px",marginBottom:"20px",color:"black"}} >
             Restart the game
           </button>
-        </h1>
-        <div className="status">{status}</div>
-        <div className="matrix">
-          {current.map((value, index) => (
-            <div className="cell" key={index}>
-              <Sqaure onClick={() => handleClick(index)} value={value} />
-            </div>
-          ))}
-        </div>
-        
-      </div>
-      <div className="game-info">
-          <ol>
-            {history.map((step, move) => {
-              const desc = move ? "Go to move #" + move : "Go to game start";
-              return (
-                <li key={move}>
-                  <button className="game-btn" onClick={() => jumpTo(move)}>{desc}</button>
-                </li>
-              );
-            })}
-          </ol>
-        </div>
-    </>
-  );
-}
+          </h1>
 
-export default App;
+          <div className="status">{status}</div>
+
+        {/* add values x|o */}
+          <div className="matrix">
+            {count.map((value, index) => (
+              <div className="cell" key={index}>
+                <Sqaure onClick={() => handleClick(index)} disabled={isButtonDisabled}  value={value} />
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    
+    export default App;

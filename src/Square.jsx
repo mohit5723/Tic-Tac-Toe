@@ -6,4 +6,3 @@ function Sqaure(props){
 }
 
 export default Sqaure;
-
